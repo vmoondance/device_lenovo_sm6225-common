@@ -498,3 +498,5 @@ PRODUCT_BOOT_JARS += \
 
 # Inherit the proprietary files
 $(call inherit-product, vendor/lenovo/sm6225-common/sm6225-common-vendor.mk)
+
+$(call inherit-product-if-exists, vendor/motorola/dolby/dolby-vendor.mk)

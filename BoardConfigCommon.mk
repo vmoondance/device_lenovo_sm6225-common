@@ -235,3 +235,6 @@ WPA_SUPPLICANT_VERSION := VER_0_8_X
 
 # Inherit the proprietary files
 include vendor/lenovo/sm6225-common/BoardConfigVendor.mk
+
+-include vendor/motorola/dolby/BoardConfigDolby.mk
+
