@@ -367,9 +367,10 @@ ifeq ($(TARGET_IS_ROW),)
 PRODUCT_PACKAGES += \
     RemovePackages.telephony
 
-# RRO
+# RRO Overlays
 PRODUCT_PACKAGES += \
-    WifiOnlyOverlay
+		SettingsOverlayXiaoxin \
+		WifiOnlyOverlay
 endif
 
 PRODUCT_PACKAGES += \
