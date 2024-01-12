@@ -370,6 +370,7 @@ PRODUCT_PACKAGES += \
 # RRO Overlays
 PRODUCT_PACKAGES += \
 		SettingsOverlayXiaoxin \
+		SettingsProviderOverlayXiaoxin \
 		WifiOnlyOverlay
 endif
 
