@@ -369,6 +369,7 @@ PRODUCT_PACKAGES += \
 
 # RRO Overlays
 PRODUCT_PACKAGES += \
+		FramworkResOverlayXiaoxin \
 		SettingsOverlayXiaoxin \
 		SettingsProviderOverlayXiaoxin \
 		WifiOnlyOverlay
