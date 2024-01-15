@@ -365,7 +365,7 @@ PRODUCT_PACKAGES += \
 ifeq ($(TARGET_IS_ROW),)
 # Remove telephony apps
 PRODUCT_PACKAGES += \
-    RemovePackages.telephony
+    RemovePackages
 
 # RRO Overlays
 PRODUCT_PACKAGES += \
@@ -375,7 +375,7 @@ PRODUCT_PACKAGES += \
 endif
 
 PRODUCT_PACKAGES += \
-    RemovePackages.tablet
+    RemovePackages
 
 # RIL
 PRODUCT_PACKAGES += \
