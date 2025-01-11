@@ -22,8 +22,12 @@ $(call inherit-product, hardware/samsung-ext/interfaces/debug-tools/debug.mk)
 # Enable project quotas and casefolding for emulated storage without sdcardfs
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 
+# Add common definitions for Qualcomm
+$(call inherit-product, hardware/qcom-caf/common/common.mk)
+
 PRODUCT_CHARACTERISTICS := tablet
 PRODUCT_SET_DEBUGFS_RESTRICTIONS := true
+PRODUCT_BROKEN_VERIFY_USES_LIBRARIES := true
 
 # AOSP Permissions
 PRODUCT_COPY_FILES += \
@@ -108,7 +112,8 @@ PRODUCT_PACKAGES += \
     android.hardware.audio.effect@7.0-impl \
     android.hardware.audio.service \
     android.hardware.bluetooth.audio-impl \
-    android.hardware.soundtrigger@2.3-impl
+    android.hardware.soundtrigger@2.3-impl \
+    libaudioroute.vendor
 
 PRODUCT_PACKAGES += \
     audio.bluetooth.default \
@@ -120,7 +125,8 @@ PRODUCT_PACKAGES += \
     libqcompostprocbundle \
     libqcomvisualizer \
     libqcomvoiceprocessing \
-    libtinycompress
+    libtinycompress \
+    libprocessgroup.vendor
 
 AUDIO_HAL_DIR := hardware/qcom-caf/sm8250/audio
 
@@ -128,7 +134,7 @@ AUDIO_HAL_DIR := hardware/qcom-caf/sm8250/audio
 # Upstream
 PRODUCT_COPY_FILES += \
     $(AUDIO_HAL_DIR)/configs/common/bluetooth_qti_hearing_aid_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_hearing_aid_audio_policy_configuration.xml \
-		$(AUDIO_HAL_DIR)/configs/bengal/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
+    $(AUDIO_HAL_DIR)/configs/bengal/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
     $(AUDIO_HAL_DIR)/configs/bengal/audio_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info.xml \
     $(AUDIO_HAL_DIR)/configs/bengal/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml
 
@@ -189,12 +195,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.graphics.mapper@3.0-impl-qti-display \
     android.hardware.graphics.mapper@4.0-impl-qti-display \
-    android.hardware.memtrack@1.0-impl \
-    android.hardware.memtrack@1.0-service \
+    vendor.qti.hardware.memtrack-service \
     vendor.lineage.livedisplay@2.0-service-sdm
 
 PRODUCT_PACKAGES += \
-    memtrack.bengal \
     gralloc.bengal
 
 PRODUCT_PACKAGES += \
@@ -226,8 +230,7 @@ PRODUCT_SYSTEM_EXT_PROPERTIES += \
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.4.vendor \
-		android.hardware.drm-service.clearkey
-
+    android.hardware.drm-service.clearkey
 
 # Fastbootd
 PRODUCT_PACKAGES += \
@@ -244,13 +247,24 @@ PRODUCT_PACKAGES += \
 
 # GNSS
 PRODUCT_PACKAGES += \
-    android.hardware.gnss@2.1-service-qti
+    android.hardware.gnss@2.1-impl-qti \
+    android.hardware.gnss@2.1-service-qti \
+    gnss@2.0-base.policy \
+    gnss@2.0-xtra-daemon.policy \
+    gnss@2.0-xtwifi-client.policy \
+    gnss@2.0-xtwifi-inet-agent.policy \
+    libbatching \
+    libgeofencing \
+    libgnss \
+    libgnsspps \
+    libloc_socket \
+    libsqlite.vendor
 
+# GPS configs
 PRODUCT_PACKAGES += \
-    android.hardware.gnss@2.0.vendor \
-    android.hardware.gnss@2.1.vendor \
-    android.hardware.gnss.measurement_corrections@1.1.vendor \
-    android.hardware.gnss.visibility_control@1.0.vendor
+    flp.conf \
+    gps.conf \
+    izat.conf
 
 # Gatekeeper
 PRODUCT_PACKAGES += \
@@ -307,17 +321,12 @@ PRODUCT_PACKAGES += \
     libstagefrighthw \
 
 PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/media/,$(TARGET_COPY_OUT_VENDOR)/etc) \
-    $(LOCAL_PATH)/media/media_profiles.xml:$(TARGET_COPY_OUT_ODM)/etc/media_profiles_V1_0.xml
-
-PRODUCT_COPY_FILES += \
-    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_c2.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_c2_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2_audio.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_c2_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2_video.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_telephony.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
+    $(LOCAL_PATH)/media/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml \
+    $(LOCAL_PATH)/media/media_codecs_performance_v3.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance_khaje.xml \
+    $(LOCAL_PATH)/media/media_codecs_vendor.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
+    $(LOCAL_PATH)/media/media_codecs_vendor_v3.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_khaje.xml \
+    $(LOCAL_PATH)/media/media_profiles_vendor.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_vendor.xml \
+    $(LOCAL_PATH)/media/system_properties.xml:$(TARGET_COPY_OUT_VENDOR)/etc/system_properties.xml
 
 # Network
 PRODUCT_PACKAGES += \
@@ -330,7 +339,7 @@ PRODUCT_PACKAGES += \
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay \
-    $(LOCAL_PATH)/overlay-bliss
+    $(LOCAL_PATH)/overlay-evolution
 
 PRODUCT_ENFORCE_RRO_TARGETS := *
 
@@ -359,23 +368,22 @@ PRODUCT_PACKAGES += \
     libqti_vndfwk_detect \
     libqti_vndfwk_detect.vendor \
     libvndfwk_detect_jni.qti \
-    libvndfwk_detect_jni.qti.vendor
+    libvndfwk_detect_jni.qti.vendor \
+    libjsoncpp.vendor \
+    libcurl.vendor
 
 ifeq ($(TARGET_IS_ROW),)
 # Remove telephony apps
 PRODUCT_PACKAGES += \
-    RemovePackages
+    RemovePackages.telephony
 
-# RRO Overlays
+# RRO
 PRODUCT_PACKAGES += \
-		FramworkResOverlayXiaoxin \
-		SettingsOverlayXiaoxin \
-		SettingsProviderOverlayXiaoxin \
-		WifiOnlyOverlay
+    WifiOnlyOverlay
 endif
 
 PRODUCT_PACKAGES += \
-    RemovePackages
+    RemovePackages.tablet
 
 # RIL
 PRODUCT_PACKAGES += \
@@ -412,8 +420,7 @@ PRODUCT_PACKAGES += \
 # Samsung Ext SmartCharge
 PRODUCT_PACKAGES += \
     vendor.samsung_ext.framework.battery-service \
-    SmartCharge \
-    battery.wt_chg
+    SmartCharge
 
 # ServiceTracker
 PRODUCT_PACKAGES += \
@@ -487,13 +494,19 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf
 
+# WiFi firmware symlinks
+PRODUCT_PACKAGES += \
+    firmware_wlan_mac.bin_symlink \
+    firmware_WCNSS_qcom_cfg.ini_symlink
+
 # WiFi Display
 PRODUCT_PACKAGES += \
     libnl \
     libwfdaac_vendor \
     libgui_shim \
     libaudioclient_shim:32 \
-    libui_gui_shim:32
+    libui_gui_shim:32 \
+    libpng.vendor
 
 PRODUCT_BOOT_JARS += \
     WfdCommon

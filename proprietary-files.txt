@@ -1,4 +1,4 @@
-# All unpinned blobs below are extracted from TB128FU_CN_OPEN_USER_Q00012.0_S_ZUI_14.0.675_ST_221216
+# All unpinned blobs below are extracted from TB128FU_CN_OPEN_USER_Q00126_T_ZUI_15.0.348_ST_230911_qpst
 
 # ADSP
 vendor/bin/adsprpcd
@@ -60,6 +60,11 @@ vendor/lib64/libsoc_helper_jni.so
 vendor/lib64/vendor.qti.hardware.bluetooth_sar@1.0.so
 vendor/lib64/vendor.qti.hardware.bluetooth_sar@1.1.so
 
+# CACert
+vendor/app/CACertService/CACertService.apk
+vendor/lib64/libasn1crt.so
+vendor/lib64/libasn1crtx.so
+
 # CDSP
 vendor/bin/cdsprpcd
 vendor/etc/init/vendor.qti.cdsprpc-service.rc
@@ -84,7 +89,7 @@ vendor/etc/init/vendor.qti.hardware.charger_monitor@1.0-service.rc
 vendor/etc/charger_fstab.qti
 
 # CNE
--vendor/app/CneApp/CneApp.apk
+-vendor/app/CneApp/CneApp.apk;REQUIRED=CneApp.libvndfwk_detect_jni.qti_symlink
 vendor/bin/cnd
 vendor/etc/cne/mwqem.conf
 vendor/etc/cne/profileMwqem.xml
@@ -251,7 +256,6 @@ vendor/etc/init/android.hardware.gatekeeper@1.0-service-qti.rc
 vendor/lib64/hw/android.hardware.gatekeeper@1.0-impl-qti.so
 
 # GNSS
-vendor/bin/hw/android.hardware.gnss@2.1-service-qti
 vendor/bin/loc_launcher
 vendor/bin/lowi-server
 vendor/bin/mlid
@@ -259,37 +263,21 @@ vendor/bin/slim_daemon
 vendor/bin/xtra-daemon
 vendor/bin/xtwifi-client
 vendor/bin/xtwifi-inet-agent
-vendor/etc/init/android.hardware.gnss@2.1-service-qti.rc
-vendor/etc/seccomp_policy/gnss@2.0-base.policy
-vendor/etc/seccomp_policy/gnss@2.0-xtra-daemon.policy
-vendor/etc/seccomp_policy/gnss@2.0-xtwifi-client.policy
-vendor/etc/seccomp_policy/gnss@2.0-xtwifi-inet-agent.policy
--vendor/etc/vintf/manifest/android.hardware.gnss@2.1-service-qti.xml
 -vendor/etc/vintf/manifest/vendor.qti.gnss@4.0-service.xml
-vendor/etc/gnss_antenna_info.conf
 vendor/etc/cacert_location.pem
 vendor/etc/xtra_root_cert.pem
-vendor/lib64/hw/android.hardware.gnss@2.1-impl-qti.so
 vendor/lib64/hw/vendor.qti.gnss@4.0-impl.so
 vendor/lib64/libaoa.so
 vendor/lib64/libasn1cper.so
-vendor/lib64/libbatching.so
 vendor/lib64/libcacertclient.so
 vendor/lib64/libdataitems.so
 vendor/lib64/libgdtap.so
-vendor/lib64/libgeofencing.so
-vendor/lib64/libgnss.so
-vendor/lib64/libgnsspps.so
-vendor/lib64/libgps.utils.so
 vendor/lib64/libizat_client_api.so
 vendor/lib64/libizat_core.so
 vendor/lib64/libjnihelper.so
 vendor/lib64/liblbs_core.so
 vendor/lib64/libloc_api_v02.so
 vendor/lib64/libloc_api_wds.so
-vendor/lib64/libloc_core.so
-vendor/lib64/libloc_socket.so
-vendor/lib64/liblocation_api.so
 vendor/lib64/liblocationservice.so
 vendor/lib64/liblocationservice_glue.so
 vendor/lib64/liblowi_client.so
@@ -298,7 +286,6 @@ vendor/lib64/libminksocket.so
 vendor/lib64/libqcc_file_agent.so
 vendor/lib64/libqdma_file_agent.so
 vendor/lib64/libslimclient.so
-vendor/lib64/libsynergy_loc_api.so
 vendor/lib64/libxtadapter.so
 vendor/lib64/libxtwifi_server_protocol.so
 vendor/lib64/libxtwifi_server_protocol_uri_v3.so
@@ -312,10 +299,6 @@ vendor/lib64/vendor.qti.gnss@4.0-service.so
 vendor/lib64/vendor.qti.gnss@4.0.so
 
 # GPS
-vendor/etc/apdr.conf
-vendor/etc/flp.conf
-vendor/etc/gps.conf
-vendor/etc/izat.conf
 vendor/etc/lowi.conf
 vendor/etc/sap.conf
 vendor/etc/xtwifi.conf
@@ -323,46 +306,42 @@ vendor/etc/xtwifi.conf
 # Graphics Adreno
 vendor/lib/egl/eglSubDriverAndroid.so
 vendor/lib/egl/libGLESv1_CM_adreno.so
-vendor/lib/egl/libq3dtools_adreno.so
+vendor/lib/egl/libq3dtools_adreno.so;SYMLINK=vendor/lib/libq3dtools_adreno.so
 vendor/lib/libllvm-qcom.so
 vendor/lib/libOpenCL.so
 vendor/lib64/egl/eglSubDriverAndroid.so
 vendor/lib64/egl/libGLESv1_CM_adreno.so
-vendor/lib64/egl/libq3dtools_adreno.so
+vendor/lib64/egl/libq3dtools_adreno.so;SYMLINK=vendor/lib64/libq3dtools_adreno.so
 vendor/lib64/libllvm-qcom.so
 vendor/lib64/libOpenCL.so
 
-# Graphics Adreno - from devon_g S2SNS32.34-72-14-1
-vendor/lib/libadreno_app_profiles.so|25925fd0a03e0dc3b4f7f097a9ee0a1808667b3c
-vendor/lib64/libadreno_app_profiles.so|a101de51b48321f15d24d67fe2928a22a65da911
-
-# Graphics Adreno - from miui_SPESGlobal_V14.0.2.0.TGCMIXM_f4e2e7b209_13.0
-vendor/lib/egl/libEGL_adreno.so|2b96d33f61340c391cc2a6c503bff6b12f2659ed
-vendor/lib/egl/libGLESv2_adreno.so|108e6cd874dacee4ff02638d694d2d62cbbdf25f
-vendor/lib/egl/libq3dtools_esx.so|25ca8fee48e36cdae2c9c434ab3f72959b0e8949
-vendor/lib/libadreno_utils.so|97e4665f049157f718c6e59910e1d7d83769a9c3
-vendor/lib/libC2D2.so|c1916f2adb917f3567b872670496994456472586
-vendor/lib/libc2d30_bltlib.so|686415649550e0258adf85219ca0f7af3ecc28f9
-vendor/lib/libCB.so|02dc1a1c96b1e2da416af00225a013fd43190d4a
-vendor/lib/libgpudataproducer.so|9998b6752ee2c28c3f152233973acfa24af4be24
-vendor/lib/libgsl.so|9f2d96e8caafc739f5665a7bbd65144206e9eba6
-vendor/lib/libllvm-glnext.so|3fea92e9d8fa3147b48b8f104c8639ea32261c20
-vendor/lib/libVkLayer_q3dtools.so|8eee9b45ebf9d2e4102513677e525eabf93b925e
-vendor/lib64/egl/libEGL_adreno.so|59cb197303a0374b11e9db751052a4e2fbfae7c4
-vendor/lib64/egl/libGLESv2_adreno.so|51c7d174b8123f6015cbdb66476147bbc9ca70b1
-vendor/lib64/egl/libq3dtools_esx.so|3623b91a25d154ec643e1d7ba94cb8b7c4320478
-vendor/lib64/libadreno_utils.so|1eb1fd83aa58a9206528c8ebf8648d2caa06600a
-vendor/lib64/libC2D2.so|2f5bb4e82006bcc854aa468126bd3fffab339f67
-vendor/lib64/libc2d30_bltlib.so|3cf4e37f2c36fe25eeb8da60474c2274e7bd7ebf
-vendor/lib64/libCB.so|37db85c8db24c32998bcdc4a93abf7669ad8939e
-vendor/lib64/libgpudataproducer.so|263efe28081d23e2644097c5dd40a39fe94756ba
-vendor/lib64/libgsl.so|53283ed9680381e7b19a3f702f2527a7816b128b
-vendor/lib64/libllvm-glnext.so|ed677107cd305708586d85083a0783ac703d580d
-vendor/lib64/libVkLayer_q3dtools.so|a5f5a3c227f3206c2f87068e1d437ad76326efb0
-
-# Graphics Vulkan - from miui_SPESGlobal_V14.0.2.0.TGCMIXM_f4e2e7b209_13.0
-vendor/lib/hw/vulkan.adreno.so|bf9536e9b2b8174cedd28eb1b2f11095670d9cfe
-vendor/lib64/hw/vulkan.adreno.so|9b2eaf02a455cc9da4080ca7f123f0102dea8a7a
+# Graphics Adreno
+vendor/lib/libadreno_app_profiles.so
+vendor/lib/egl/libEGL_adreno.so;SYMLINK=vendor/lib/libEGL_adreno.so
+vendor/lib/egl/libGLESv2_adreno.so;SYMLINK=vendor/lib/libGLESv2_adreno.so
+vendor/lib/egl/libq3dtools_esx.so
+vendor/lib/libadreno_utils.so
+vendor/lib/libC2D2.so
+vendor/lib/libc2d30_bltlib.so
+vendor/lib/libCB.so
+vendor/lib/libgpudataproducer.so
+vendor/lib/libgsl.so
+vendor/lib/libllvm-glnext.so
+vendor/lib/libVkLayer_q3dtools.so
+vendor/lib/hw/vulkan.adreno.so
+vendor/lib64/egl/libEGL_adreno.so;SYMLINK=vendor/lib64/libEGL_adreno.so
+vendor/lib64/egl/libGLESv2_adreno.so;SYMLINK=vendor/lib64/libGLESv2_adreno.so
+vendor/lib64/egl/libq3dtools_esx.so
+vendor/lib64/libadreno_app_profiles.so
+vendor/lib64/libadreno_utils.so
+vendor/lib64/libC2D2.so
+vendor/lib64/libc2d30_bltlib.so
+vendor/lib64/libCB.so
+vendor/lib64/libgpudataproducer.so
+vendor/lib64/libgsl.so
+vendor/lib64/libllvm-glnext.so
+vendor/lib64/libVkLayer_q3dtools.so
+vendor/lib64/hw/vulkan.adreno.so
 
 # IMS
 -system_ext/app/uceShimService/uceShimService.apk
@@ -373,8 +352,8 @@ system_ext/lib64/lib-imsvt.so
 system_ext/lib64/lib-imsvtextutils.so
 system_ext/lib64/lib-imsvtutils.so
 system_ext/lib64/libdiag_system.so
-system_ext/lib64/libimscamera_jni.so
-system_ext/lib64/libimsmedia_jni.so
+system_ext/lib64/libimscamera_jni.so;SYMLINK=system_ext/priv-app/ims/lib/arm64/libimscamera_jni.so
+system_ext/lib64/libimsmedia_jni.so;SYMLINK=system_ext/priv-app/ims/lib/arm64/libimsmedia_jni.so
 system_ext/lib64/vendor.qti.diaghal@1.0.so
 system_ext/lib64/vendor.qti.ims.factory@1.0.so
 system_ext/lib64/vendor.qti.ims.factory@1.1.so
@@ -486,50 +465,27 @@ vendor/lib/libmmosal.so
 vendor/lib64/libmmosal.so
 
 # Media OMX
-vendor/lib/libAlacSwDec.so
-vendor/lib/libApeSwDec.so
 vendor/lib/libdsd2pcm.so
-vendor/lib/libFlacSwDec.so
-vendor/lib/libMpeg4SwEncoder.so
-vendor/lib/libMpeghSwEnc.so
 vendor/lib/libOmxAacDec.so
 vendor/lib/libOmxAlacDec.so
-vendor/lib/libOmxAlacDecSw.so
 vendor/lib/libOmxAmrDec.so
 vendor/lib/libOmxAmrwbplusDec.so
 vendor/lib/libOmxApeDec.so
-vendor/lib/libOmxApeDecSw.so
 vendor/lib/libOmxDsdDec.so
 vendor/lib/libOmxEvrcDec.so
 vendor/lib/libOmxG711Dec.so
-vendor/lib/libOmxMpeghDecSw.so
-vendor/lib/libOmxMpeghEncSw.so
 vendor/lib/libOmxQcelp13Dec.so
-vendor/lib/libOmxSwVdec.so
-vendor/lib/libOmxSwVencMpeg4.so
 vendor/lib/libOmxVideoDSMode.so
 vendor/lib/libOmxWmaDec.so
-vendor/lib/libswvdec.so
-vendor/lib64/libAlacSwDec.so
-vendor/lib64/libApeSwDec.so
-vendor/lib64/libFlacSwDec.so
-vendor/lib64/libMpeg4SwEncoder.so
-vendor/lib64/libMpeghSwEnc.so
 vendor/lib64/libOmxAacDec.so
 vendor/lib64/libOmxAlacDec.so
-vendor/lib64/libOmxAlacDecSw.so
 vendor/lib64/libOmxAmrDec.so
 vendor/lib64/libOmxAmrwbplusDec.so
 vendor/lib64/libOmxApeDec.so
-vendor/lib64/libOmxApeDecSw.so
 vendor/lib64/libOmxEvrcDec.so
 vendor/lib64/libOmxG711Dec.so
-vendor/lib64/libOmxMpeghEncSw.so
 vendor/lib64/libOmxQcelp13Dec.so
-vendor/lib64/libOmxSwVdec.so
-vendor/lib64/libOmxSwVencMpeg4.so
 vendor/lib64/libOmxWmaDec.so
-vendor/lib64/libswvdec.so
 
 # Neural networks
 vendor/bin/hw/android.hardware.neuralnetworks@1.3-service-qti
@@ -614,7 +570,6 @@ vendor/bin/port-bridge
 vendor/bin/qrtr-cfg
 vendor/bin/qrtr-lookup
 vendor/bin/qrtr-ns
-vendor/bin/qti
 vendor/bin/rmt_storage
 vendor/bin/ssgtzd
 vendor/bin/tftp_server
@@ -630,6 +585,7 @@ vendor/etc/init/port-bridge.rc
 vendor/etc/init/ssgtzd.rc
 vendor/etc/init/vendor.qti.rmt_storage.rc
 vendor/etc/init/vendor.qti.tftp.rc
+vendor/lib/libconfigdb.so
 vendor/lib/libnetmgr.so
 vendor/lib/libmdmdetect.so
 vendor/lib64/libconfigdb.so
@@ -675,7 +631,6 @@ vendor/lib64/vendor.qti.hardware.radio.uim_remote_server@1.0.so
 # Sensors Calibrate
 vendor/bin/hw/vendor.qti.hardware.sensorscalibrate@1.0-service
 vendor/etc/init/vendor.qti.hardware.sensorscalibrate@1.0-service.rc
-vendor/etc/permissions/vendor-qti-hardware-sensorscalibrate.xml
 vendor/lib64/hw/vendor.qti.hardware.sensorscalibrate@1.0-impl.so
 vendor/lib64/vendor.qti.hardware.sensorscalibrate@1.0.so
 
@@ -765,14 +720,14 @@ system_ext/lib/libmmrtpdecoder.so
 system_ext/lib/libmmrtpencoder.so
 system_ext/lib/libwfdavenhancements.so
 system_ext/lib/libwfdclient.so
-system_ext/lib/libwfdcommonutils.so|5543908f1bd14a535a63be847356272861acc79e
+system_ext/lib/libwfdcommonutils.so|b4abfefb96b6b3da5da4b208fbfb22d2ebc58b33
 system_ext/lib/libwfdconfigutils.so
 system_ext/lib/libwfddisplayconfig.so
 system_ext/lib/libwfdmminterface.so
 system_ext/lib/libwfdmmsink.so
-system_ext/lib/libwfdmmsrc_system.so|b994be02397830c19d55ef209ea5c3b561c40a75
+system_ext/lib/libwfdmmsrc_system.so|391b53dd0b710d4e012abd23ea315dee4b93b9fe
 system_ext/lib/libwfdrtsp.so
-system_ext/lib/libwfdservice.so|fef60293f70968b64a23a80bc33d46e3333c7ab5
+system_ext/lib/libwfdservice.so|822528286ed82d714f9c5681aeca3cbd79613e06
 system_ext/lib/libwfdsinksm.so
 system_ext/lib/libwfduibcinterface.so
 system_ext/lib/libwfduibcsink.so
@@ -785,12 +740,12 @@ system_ext/lib64/libmmparser_lite.so
 system_ext/lib64/libmmrtpdecoder.so
 system_ext/lib64/libmmrtpencoder.so
 system_ext/lib64/libwfdclient.so
-system_ext/lib64/libwfdcommonutils.so|affb178d4ad733929a0a67059906af19431aae29
+system_ext/lib64/libwfdcommonutils.so|aaa77b32d96b0cc3a310e86f2c4c6c2e2656c666
 system_ext/lib64/libwfdconfigutils.so
 system_ext/lib64/libwfddisplayconfig.so
 system_ext/lib64/libwfdmminterface.so
 system_ext/lib64/libwfdmmsink.so
-system_ext/lib64/libwfdnative.so|142eee595c856cfcae05d47d4c7554c220a7a029
+system_ext/lib64/libwfdnative.so;SYMLINK=system_ext/priv-app/WfdService/lib/arm64/libwfdnative.so|14c429bc225e223a1d0f7ca227d838de35b7634d
 system_ext/lib64/libwfdrtsp.so
 system_ext/lib64/libwfdsinksm.so
 system_ext/lib64/libwfduibcinterface.so
