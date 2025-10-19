@@ -106,13 +106,17 @@ BOARD_KERNEL_CMDLINE += \
     swiotlb=2048
 BOARD_KERNEL_CMDLINE += cgroup_disable=pressure
 
+# Use prebuilt kernel
+# TARGET_FORCE_PREBUILT_KERNEL := true
+#TARGET_PREBUILT_KERNEL := device/lenovo/tb128fu-kernel/kernel
 TARGET_KERNEL_CONFIG := grass-perf_defconfig
 TARGET_KERNEL_SOURCE := kernel/lenovo/tb128fu
 
-TARGET_PREBUILT_DTB := $(COMMON_PATH)/prebuilt/dtb.img
-TARGET_PREBUILT_RECOVERY_DTBO := $(COMMON_PATH)/prebuilt/dtbo.img
+# DTB - використовуємо prebuilt (kernel компілюється, але DTB prebuilt)
+TARGET_PREBUILT_DTB := device/lenovo/tb128fu-kernel/dtb.img
+TARGET_PREBUILT_RECOVERY_DTBO := device/lenovo/tb128fu-kernel/dtbo.img
 BOARD_PREBUILT_RECOVERY_DTBOIMAGE := $(TARGET_PREBUILT_RECOVERY_DTBO)
-BOARD_PREBUILT_DTBIMAGE_DIR := $(COMMON_PATH)/prebuilt
+BOARD_PREBUILT_DTBIMAGE_DIR := device/lenovo/tb128fu-kernel
 
 # Media
 TARGET_DISABLED_UBWC := true

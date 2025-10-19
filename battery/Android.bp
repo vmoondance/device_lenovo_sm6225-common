@@ -1,5 +1,10 @@
 cc_library_shared {
    name: "battery.wt_chg",
-   defaults: ["aidl_battery_module_defaults"],
    srcs: ["BatteryImpl.cpp"],
+   vendor: true,
+   shared_libs: [
+       "libbase",
+       "libbinder_ndk",
+       "liblog",
+   ],
 }
