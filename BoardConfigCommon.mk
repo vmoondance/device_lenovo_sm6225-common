@@ -16,11 +16,13 @@ TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 :=
 TARGET_CPU_VARIANT := cortex-a53
 
-TARGET_2ND_ARCH := arm
-TARGET_2ND_ARCH_VARIANT := armv8-a
-TARGET_2ND_CPU_ABI := armeabi-v7a
-TARGET_2ND_CPU_ABI2 := armeabi
-TARGET_2ND_CPU_VARIANT := cortex-a53
+TARGET_2ND_ARCH :=
+TARGET_2ND_ARCH_VARIANT :=
+TARGET_2ND_CPU_ABI :=
+TARGET_2ND_CPU_ABI2 :=
+TARGET_2ND_CPU_VARIANT :=
+
+TARGET_SUPPORTS_32_BIT_APPS := false
 
 # ANT+
 BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
@@ -70,53 +72,35 @@ LOC_HIDL_VERSION := 4.0
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
     hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml \
     vendor/lineage/config/device_framework_matrix.xml
-DEVICE_MANIFEST_FILE += \
+DEVICE_MANIFEST_FILE +=\
     $(COMMON_PATH)/manifest.xml \
     $(COMMON_PATH)/manifest_lineage.xml
 DEVICE_MATRIX_FILE += $(COMMON_PATH)/compatibility_matrix.xml
 
 # Init
-TARGET_INIT_VENDOR_LIB ?= //$(COMMON_PATH):init_lenovo_bengal
+# TARGET_INIT_VENDOR_LIB ?= //$(COMMON_PATH):init_lenovo_bengal
 TARGET_RECOVERY_DEVICE_MODULES ?= init_lenovo_bengal
 
 # Kernel
 BOARD_KERNEL_BASE        := 0x00000000
-BOARD_KERNEL_IMAGE_NAME  := Image
-BOARD_KERNEL_OFFSET      := 0x00008000
 BOARD_KERNEL_PAGESIZE    := 4096
 BOARD_RAMDISK_OFFSET     := 0x01000000
 BOARD_TAGS_OFFSET        := 0x00000100
 BOARD_DTB_OFFSET 	 := 0x01f00000
-
 BOARD_BOOT_HEADER_VERSION := 2
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
-
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
-BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
+BOARD_PREBUILT_DTBIMAGE_DIR := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/arch/arm64/boot/dts/vendor/qcom
 
-BOARD_KERNEL_CMDLINE += \
-    androidboot.hardware=qcom \
-    androidboot.memcg=1 \
-    androidboot.usbcontroller=4e00000.dwc3 \
-    loop.max_part=7 \
-    lpm_levels.sleep_disabled=1 \
-    msm_rtb.filter=0x237 \
-    service_locator.enable=1 \
-    swiotlb=2048
-BOARD_KERNEL_CMDLINE += cgroup_disable=pressure
+BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8 androidboot.hardware=qcom androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 androidboot.usbcontroller=a600000.dwc3 swiotlb=2048 loop.max_part=7 cgroup.memory=nokmem,nosocket
 
-# Use prebuilt kernel
-# TARGET_FORCE_PREBUILT_KERNEL := true
-#TARGET_PREBUILT_KERNEL := device/lenovo/tb128fu-kernel/kernel
-TARGET_KERNEL_CONFIG := grass-perf_defconfig
+TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_SOURCE := kernel/lenovo/tb128fu
-
-# DTB - використовуємо prebuilt (kernel компілюється, але DTB prebuilt)
-TARGET_PREBUILT_DTB := device/lenovo/tb128fu-kernel/dtb.img
-TARGET_PREBUILT_RECOVERY_DTBO := device/lenovo/tb128fu-kernel/dtbo.img
-BOARD_PREBUILT_RECOVERY_DTBOIMAGE := $(TARGET_PREBUILT_RECOVERY_DTBO)
-BOARD_PREBUILT_DTBIMAGE_DIR := device/lenovo/tb128fu-kernel
+TARGET_KERNEL_CONFIG := vendor/bengal_defconfig
+BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
+TARGET_KERNEL_CLANG_COMPILE := true
+BOARD_USES_VENDOR_DLKMIMAGE := true
 
 # Media
 TARGET_DISABLED_UBWC := true
@@ -160,10 +144,6 @@ BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
-
-# Disable sparse on all filesystem images
-TARGET_USERIMAGES_SPARSE_EROFS_DISABLED := true
-TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
@@ -237,3 +217,15 @@ WPA_SUPPLICANT_VERSION := VER_0_8_X
 
 # Inherit the proprietary files
 include vendor/lenovo/sm6225-common/BoardConfigVendor.mk
+
+# Conditional creation of file_list.txt to fix build order issue
+_vendor_intermediates_file_list := $(PRODUCT_OUT)/obj/PACKAGING/vendor_intermediates/file_list.txt
+ifneq ($(wildcard $(_vendor_intermediates_file_list)),)
+    CREATE_MISSING_FILE_LIST := false
+else
+    CREATE_MISSING_FILE_LIST := true
+endif
+
+ifeq ($(CREATE_MISSING_FILE_LIST),true)
+    $(shell mkdir -p $(dir $(_vendor_intermediates_file_list)) && touch $(_vendor_intermediates_file_list))
+endif
