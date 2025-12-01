@@ -69,10 +69,10 @@ function blob_fixup() {
     ;;
   system_ext/lib/libwfdmmsrc_system.so)
     "${PATCHELF}" --add-needed libgui_shim.so "${2}"
-    "${PATCHELF}" --add-needed libui_gui_shim.so "${2}"
+    "${PATCHELF}" --add-needed libui_shim.so "${2}"
     ;;
   system_ext/lib/libwfdservice.so)
-    "${PATCHELF}" --add-needed libaudioclient_shim.so "${2}"
+    "${PATCHELF}" --add-needed libwfdservice_shim.so "${2}"
     ;;
   vendor/lib64/vendor.qti.hardware.camera.postproc@1.0-service-impl.so)
     hexdump -ve '1/1 "%.2X"' "${2}" | sed "s/130A0094/1F2003D5/g" | xxd -r -p >"/tmp/${1##*/}"
@@ -80,6 +80,26 @@ function blob_fixup() {
     ;;
   system_ext/lib64/libqti_workloadclassifiermodel.so)
     "${PATCHELF}" --replace-needed libtflite.so libtflite.tb128fu.so "${2}"
+    ;;
+  system_ext/lib64/*.so | system_ext/lib/*.so | vendor/lib64/*.so | vendor/lib/*.so)
+    if grep -q "libhidlbase.so" "${2}"; then
+      "${PATCHELF}" --replace-needed libhidlbase.so libhidlbase-v32.so "${2}"
+    fi
+    if grep -q "libui.so" "${2}"; then
+      "${PATCHELF}" --replace-needed libui.so libui-v34.so "${2}"
+    fi
+    if grep -q "libbinder.so" "${2}"; then
+      "${PATCHELF}" --replace-needed libbinder.so libbinder_shim.so "${2}"
+    fi
+    if grep -q "libmeminfo.so" "${2}"; then
+      "${PATCHELF}" --replace-needed libmeminfo.so libmeminfo_shim.so "${2}"
+    fi
+    if grep -q "libprocessgroup.so" "${2}"; then
+      "${PATCHELF}" --replace-needed libprocessgroup.so libprocessgroup_shim.so "${2}"
+    fi
+    if grep -q "libcamera_metadata.so" "${2}"; then
+      "${PATCHELF}" --replace-needed libcamera_metadata.so libcamera_metadata_shim.so "${2}"
+    fi
     ;;
   esac
 }

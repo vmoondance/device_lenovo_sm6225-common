@@ -2,3 +2,9 @@
 audio.offload.min.duration.secs=30
 audio.sys.offload.pstimeout.secs=3
 ro.config.vc_call_vol_steps=11
+
+# eBPF
+ro.bpf.kver_override=5.10.239
+
+# System server
+arm64.memtag.process.system_server=off

@@ -14,5 +14,11 @@ include $(CLEAR_VARS)
 
 endif
 
+<<<<<<< Updated upstream
 # include hardware/xiaomi/aidl/power-libperfmgr/Android.mk
 
+=======
+ifneq ($(wildcard hardware/xiaomi/aidl/power-libperfmgr/Android.mk),)
+include hardware/xiaomi/aidl/power-libperfmgr/Android.mk
+endif
+>>>>>>> Stashed changes

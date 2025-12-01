@@ -1,8 +1,12 @@
 cc_library {
     name: "libaudioclient_shim",
+    enabled: false,
     srcs: ["shim.cc"],
     shared_libs: [
+<<<<<<< Updated upstream:libshims/libaudioclient/Android.bp.bak
         "android.media.audio.common.types-V4-cpp",
+=======
+>>>>>>> Stashed changes:libshims/libaudioclient/Android.bp
         "audioclient-types-aidl-cpp",
         "libaudioclient",
         "libaudioclient_aidl_conversion",

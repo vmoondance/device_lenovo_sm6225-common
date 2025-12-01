@@ -47,6 +47,7 @@ TARGET_NO_BOOTLOADER := true
 # Build Hacks
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 BUILD_BROKEN_DUP_RULES := true
+BUILD_BROKEN_VINTF_PRODUCT_COPY_FILES := true
 
 # Configs File System
 TARGET_FS_CONFIG_GEN := $(COMMON_PATH)/config.fs
@@ -78,7 +79,11 @@ DEVICE_MANIFEST_FILE +=\
 DEVICE_MATRIX_FILE += $(COMMON_PATH)/compatibility_matrix.xml
 
 # Init
+<<<<<<< Updated upstream
 # TARGET_INIT_VENDOR_LIB ?= //$(COMMON_PATH):init_lenovo_bengal
+=======
+$(call soong_config_set,libinit,vendor_init_lib,init_lenovo_bengal)
+>>>>>>> Stashed changes
 TARGET_RECOVERY_DEVICE_MODULES ?= init_lenovo_bengal
 
 # Kernel
@@ -93,6 +98,7 @@ BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
 BOARD_PREBUILT_DTBIMAGE_DIR := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/arch/arm64/boot/dts/vendor/qcom
 
+<<<<<<< Updated upstream
 BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8 androidboot.hardware=qcom androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 androidboot.usbcontroller=a600000.dwc3 swiotlb=2048 loop.max_part=7 cgroup.memory=nokmem,nosocket
 
 TARGET_KERNEL_ARCH := arm64
@@ -101,6 +107,34 @@ TARGET_KERNEL_CONFIG := vendor/bengal_defconfig
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 TARGET_KERNEL_CLANG_COMPILE := true
 BOARD_USES_VENDOR_DLKMIMAGE := true
+=======
+BOARD_KERNEL_CMDLINE += \
+    androidboot.hardware=qcom \
+    androidboot.memcg=1 \
+    androidboot.usbcontroller=4e00000.dwc3 \
+    androidboot.selinux=permissive
+    loop.max_part=7 \
+    lpm_levels.sleep_disabled=1 \
+    msm_rtb.filter=0x237 \
+    service_locator.enable=1 \
+    swiotlb=2048
+BOARD_KERNEL_CMDLINE += cgroup_disable=pressure
+
+# Use prebuilt kernel
+# TARGET_FORCE_PREBUILT_KERNEL := true
+#TARGET_PREBUILT_KERNEL := device/lenovo/tb128fu-kernel/kernel
+TARGET_KERNEL_CONFIG := grass-perf_defconfig
+TARGET_KERNEL_SOURCE := kernel/lenovo/tb128fu
+
+# DTB - використовуємо prebuilt (kernel компілюється, але DTB prebuilt)
+TARGET_PREBUILT_DTB := device/lenovo/tb128fu-kernel/dtb.img
+TARGET_PREBUILT_RECOVERY_DTBO := device/lenovo/tb128fu-kernel/dtbo.img
+BOARD_PREBUILT_RECOVERY_DTBOIMAGE := $(TARGET_PREBUILT_RECOVERY_DTBO)
+BOARD_PREBUILT_DTBIMAGE_DIR := device/lenovo/tb128fu-kernel
+BOARD_KERNEL_SEPARATED_DTBO := true
+BOARD_PREBUILT_DTBOIMAGE := $(COMMON_PATH)/prebuilt/dtbo.img
+BOARD_CUSTOM_DTBOIMG_MK := $(COMMON_PATH)/dtbo_prebuilt.mk
+>>>>>>> Stashed changes
 
 # Media
 TARGET_DISABLED_UBWC := true
@@ -168,7 +202,7 @@ endif
 
 # Recovery
 TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/rootdir/etc/fstab.qcom
-TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 BOARD_INCLUDE_RECOVERY_DTBO := true
 
 # Releasetools

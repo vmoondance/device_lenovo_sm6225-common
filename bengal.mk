@@ -101,6 +101,13 @@ PRODUCT_PACKAGES += \
     checkpoint_gc \
     otapreopt_script
 
+<<<<<<< Updated upstream
+=======
+# ANT+
+PRODUCT_PACKAGES += \
+    com.dsi.ant@1.0.vendor
+
+>>>>>>> Stashed changes
 # Audio
 PRODUCT_PACKAGES += \
     android.hardware.audio@7.0-impl \
@@ -189,7 +196,10 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.mapper@3.0-impl-qti-display \
     android.hardware.graphics.mapper@4.0-impl-qti-display \
     vendor.qti.hardware.memtrack-service
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
 PRODUCT_PACKAGES += \
     init.qti.display_boot.sh \
@@ -297,6 +307,13 @@ PRODUCT_PACKAGES += \
     libavservices_minijail.vendor \
     libavservices_minijail_vendor
 
+<<<<<<< Updated upstream
+=======
+PRODUCT_PACKAGES += \
+    libOmxCore \
+    libOmxVdec \
+    libOmxVenc
+>>>>>>> Stashed changes
 
 PRODUCT_PACKAGES += \
     libstagefrighthw \
@@ -447,6 +464,12 @@ PRODUCT_PACKAGES += \
 PRODUCT_BOOT_JARS += \
     telephony-ext
 
+<<<<<<< Updated upstream
+=======
+# USB
+PRODUCT_PACKAGES +=
+
+>>>>>>> Stashed changes
 # Vendor service manager
 PRODUCT_PACKAGES += \
     vndservicemanager
@@ -479,13 +502,52 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libnl \
     libwfdaac_vendor \
-    libgui_shim \
-    libaudioclient_shim:32 \
-    libui_gui_shim:32 \
     libpng.vendor
 
-PRODUCT_BOOT_JARS += \
-    WfdCommon
+# Compat shims for WiFi Display / graphics (from hardware/lineage/compat)
+PRODUCT_PACKAGES += \
+    libgui_shim \
+    libgui_shim_vendor \
+    libui_shim \
+    libui-v34 \
+    libwfdservice_shim \
+    libaudioproxy_shim \
+    libaudioclient_shim \
+    libavservices_minijail_vendor \
+    libaudioroute-v34 \
+    libbase_shim \
+    libbase-v33 \
+    libcutils-v29 \
+    libcutils_shim \
+    libdemangle \
+    libhidlbase-v32 \
+    libhidlbase_shim \
+    libinput_shim \
+    libjsoncpp_shim \
+    libmeminfo_shim \
+    libmemset_shim \
+    libpiex_shim \
+    libprocessgroup_shim \
+    libsensor_vendor \
+    libtinyxml2_shim \
+    libcomparetf2_shim \
+    libprotobuf-cpp-full-v29 \
+    libprotobuf-cpp-lite-v29 \
+    libprotobuf-cpp-full-vendorcompat \
+    libprotobuf-cpp-lite-vendorcompat \
+    libstagefright_foundation-v33 \
+    libutils-v32 \
+    libutils-v33 \
+    libutils_shim \
+    libcrypto-v33 \
+    libcrypto_shim \
+    libip_checksum_shim \
+    libnativehelper_shim \
+    libc_mutexdestroy_shim \
+    libc_pthreadts_shim \
+    libcamera_metadata_shim \
+    libcamera_provider_shim \
+    libbinder_shim
 
 # Inherit the proprietary files
 $(call inherit-product, vendor/lenovo/sm6225-common/sm6225-common-vendor.mk)
