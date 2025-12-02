@@ -101,13 +101,9 @@ PRODUCT_PACKAGES += \
     checkpoint_gc \
     otapreopt_script
 
-<<<<<<< Updated upstream
-=======
 # ANT+
 PRODUCT_PACKAGES += \
     com.dsi.ant@1.0.vendor
-
->>>>>>> Stashed changes
 # Audio
 PRODUCT_PACKAGES += \
     android.hardware.audio@7.0-impl \
