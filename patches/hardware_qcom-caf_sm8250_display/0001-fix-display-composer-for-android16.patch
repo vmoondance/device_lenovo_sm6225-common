@@ -1,0 +1,29 @@
+diff --git a/composer/Android.bp b/composer/Android.bp
+index f20052fea6..7ebd65cbd3 100644
+--- a/composer/Android.bp
++++ b/composer/Android.bp
+@@ -56,6 +56,8 @@ cc_binary {
+         "android.hardware.graphics.allocator@3.0",
+         "libdisplayconfig.qti",
+         "libdrm",
++        "libbase",
++        "libgrallocusage",
+     ],
+     srcs: composer_srcs,
+ 
+diff --git a/composer/hwc_session.cpp b/composer/hwc_session.cpp
+index 01f9245846..36bd9774dd 100644
+--- a/composer/hwc_session.cpp
++++ b/composer/hwc_session.cpp
+@@ -78,6 +78,11 @@
+ #include <thread>
+ #include <vector>
+ 
++// Android 16 compatibility includes
++#include <ui/GraphicBuffer.h>
++#include <ui/GraphicBufferMapper.h>
++#include <grallocusage/GrallocUsageConversion.h>
++
+ #include "hwc_buffer_allocator.h"
+ #include "hwc_session.h"
+ #include "hwc_debugger.h"

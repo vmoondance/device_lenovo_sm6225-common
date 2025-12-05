@@ -16,26 +16,38 @@ TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 :=
 TARGET_CPU_VARIANT := cortex-a53
 
-TARGET_2ND_ARCH :=
-TARGET_2ND_ARCH_VARIANT :=
-TARGET_2ND_CPU_ABI :=
-TARGET_2ND_CPU_ABI2 :=
-TARGET_2ND_CPU_VARIANT :=
+# 32-bit support (Redmi Pad SE compatible)
+TARGET_2ND_ARCH := arm
+TARGET_2ND_ARCH_VARIANT := armv8-a
+TARGET_2ND_CPU_ABI := armeabi-v7a
+TARGET_2ND_CPU_ABI2 := armeabi
+TARGET_2ND_CPU_VARIANT := cortex-a53
 
-TARGET_SUPPORTS_32_BIT_APPS := false
+TARGET_SUPPORTS_32_BIT_APPS := true
 
 # ANT+
 BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
 
 # Audio
+AUDIO_FEATURE_ENABLED_EXT_AMPLIFIER := true
 AUDIO_FEATURE_ENABLED_EXTENDED_COMPRESS_FORMAT := true
 AUDIO_FEATURE_ENABLED_EXTN_FORMATS := true
 AUDIO_FEATURE_ENABLED_FM_POWER_OPT := true
+AUDIO_FEATURE_ENABLED_GEF_SUPPORT := true
 AUDIO_FEATURE_ENABLED_HDMI_SPK := true
+AUDIO_FEATURE_ENABLED_INSTANCE_ID := true
 AUDIO_FEATURE_ENABLED_PROXY_DEVICE := true
+AUDIO_FEATURE_ENABLED_SSR := true
+BOARD_SUPPORTS_OPENSOURCE_STHAL := true
 BOARD_SUPPORTS_SOUND_TRIGGER := true
+BOARD_USES_ALSA_AUDIO := true
 TARGET_PROVIDES_AUDIO_EXTNS := true
 USE_CUSTOM_AUDIO_POLICY := 1
+
+# Audio HAL - use SM8450 with bengal configs (SM6225 specific configs not available)
+# SM8450 HAL is compatible and has optimized bengal configurations
+AUDIO_HAL_DIR := hardware/qcom-caf/sm8250/audio
+AUDIO_HAL_VARIANT := sm8250
 
 # Bluetooth
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(COMMON_PATH)/bluetooth/include
@@ -62,6 +74,9 @@ TARGET_USES_HWC2 := true
 TARGET_USES_ION := true
 TARGET_USES_VULKAN := true
 
+# Display HAL - use SM8450 (SM6225 specific not available)
+DISPLAY_HAL_DIR := hardware/qcom-caf/sm8250/display
+
 # FM
 BOARD_HAVE_QCOM_FM := true
 
@@ -71,19 +86,14 @@ LOC_HIDL_VERSION := 4.0
 
 # HIDL
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
-    hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml \
-    vendor/lineage/config/device_framework_matrix.xml
+    hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml
 DEVICE_MANIFEST_FILE +=\
     $(COMMON_PATH)/manifest.xml \
     $(COMMON_PATH)/manifest_lineage.xml
 DEVICE_MATRIX_FILE += $(COMMON_PATH)/compatibility_matrix.xml
 
 # Init
-<<<<<<< Updated upstream
-# TARGET_INIT_VENDOR_LIB ?= //$(COMMON_PATH):init_lenovo_bengal
-=======
 $(call soong_config_set,libinit,vendor_init_lib,init_lenovo_bengal)
->>>>>>> Stashed changes
 TARGET_RECOVERY_DEVICE_MODULES ?= init_lenovo_bengal
 
 # Kernel
@@ -98,7 +108,6 @@ BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
 BOARD_PREBUILT_DTBIMAGE_DIR := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/arch/arm64/boot/dts/vendor/qcom
 
-<<<<<<< Updated upstream
 BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8 androidboot.hardware=qcom androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 androidboot.usbcontroller=a600000.dwc3 swiotlb=2048 loop.max_part=7 cgroup.memory=nokmem,nosocket
 
 TARGET_KERNEL_ARCH := arm64
@@ -107,26 +116,8 @@ TARGET_KERNEL_CONFIG := vendor/bengal_defconfig
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 TARGET_KERNEL_CLANG_COMPILE := true
 BOARD_USES_VENDOR_DLKMIMAGE := true
-=======
-BOARD_KERNEL_CMDLINE += \
-    androidboot.hardware=qcom \
-    androidboot.memcg=1 \
-    androidboot.usbcontroller=4e00000.dwc3 \
-    androidboot.selinux=permissive
-    loop.max_part=7 \
-    lpm_levels.sleep_disabled=1 \
-    msm_rtb.filter=0x237 \
-    service_locator.enable=1 \
-    swiotlb=2048
-BOARD_KERNEL_CMDLINE += cgroup_disable=pressure
 
-# Use prebuilt kernel
-# TARGET_FORCE_PREBUILT_KERNEL := true
-#TARGET_PREBUILT_KERNEL := device/lenovo/tb128fu-kernel/kernel
-TARGET_KERNEL_CONFIG := grass-perf_defconfig
-TARGET_KERNEL_SOURCE := kernel/lenovo/tb128fu
-
-# DTB - використовуємо prebuilt (kernel компілюється, але DTB prebuilt)
+# DTB configuration for prebuilt
 TARGET_PREBUILT_DTB := device/lenovo/tb128fu-kernel/dtb.img
 TARGET_PREBUILT_RECOVERY_DTBO := device/lenovo/tb128fu-kernel/dtbo.img
 BOARD_PREBUILT_RECOVERY_DTBOIMAGE := $(TARGET_PREBUILT_RECOVERY_DTBO)
@@ -134,7 +125,6 @@ BOARD_PREBUILT_DTBIMAGE_DIR := device/lenovo/tb128fu-kernel
 BOARD_KERNEL_SEPARATED_DTBO := true
 BOARD_PREBUILT_DTBOIMAGE := $(COMMON_PATH)/prebuilt/dtbo.img
 BOARD_CUSTOM_DTBOIMG_MK := $(COMMON_PATH)/dtbo_prebuilt.mk
->>>>>>> Stashed changes
 
 # Media
 TARGET_DISABLED_UBWC := true

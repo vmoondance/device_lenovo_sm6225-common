@@ -106,6 +106,7 @@ PRODUCT_PACKAGES += \
     com.dsi.ant@1.0.vendor
 # Audio
 PRODUCT_PACKAGES += \
+    audio_amplifier.bengal \
     android.hardware.audio@7.0-impl \
     android.hardware.audio.effect@7.0-impl \
     android.hardware.audio.service \
@@ -126,6 +127,13 @@ PRODUCT_PACKAGES += \
     libtinycompress \
     libprocessgroup.vendor
 
+# 32-bit audio libraries (for compatibility)
+PRODUCT_PACKAGES += \
+    libaudioclient \
+    libaudiopolicy \
+#    libsoundtrigger \
+    libOpenSLES
+
 AUDIO_HAL_DIR := hardware/qcom-caf/sm8250/audio
 
 # Audio configs
@@ -136,9 +144,14 @@ PRODUCT_COPY_FILES += \
     $(AUDIO_HAL_DIR)/configs/bengal/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml
 
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
     $(LOCAL_PATH)/audio/audio_io_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_io_policy.conf \
     $(LOCAL_PATH)/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/audio_policy_configuration.xml \
-    $(LOCAL_PATH)/audio/audio_policy_configuration_a2dp_offload_disabled.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration_a2dp_offload_disabled.xml
+    $(LOCAL_PATH)/audio/audio_policy_configuration_a2dp_offload_disabled.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration_a2dp_offload_disabled.xml \
+    $(LOCAL_PATH)/audio/audio_policy_configuration_vendor.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration_vendor.xml \
+    $(LOCAL_PATH)/audio/bluetooth_hearing_aid_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_hearing_aid_audio_policy_configuration.xml \
+    $(LOCAL_PATH)/audio/sound_trigger_mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_mixer_paths.xml \
+    $(LOCAL_PATH)/audio/sound_trigger_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_platform_info.xml
 
 PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
@@ -192,10 +205,6 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.mapper@3.0-impl-qti-display \
     android.hardware.graphics.mapper@4.0-impl-qti-display \
     vendor.qti.hardware.memtrack-service
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 
 PRODUCT_PACKAGES += \
     init.qti.display_boot.sh \
@@ -211,6 +220,15 @@ PRODUCT_PACKAGES += \
     vendor.display.config@1.11.vendor \
     vendor.display.config@2.0 \
     vendor.display.config@2.0.vendor
+
+# 32-bit UI graphics libraries
+PRODUCT_PACKAGES += \
+    libui \
+    libgui \
+    libEGL \
+    libGLESv1_CM \
+    libGLESv2 \
+    libGLESv3
 
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.display.allocator-service \
@@ -296,20 +314,17 @@ PRODUCT_PACKAGES += \
 
 # Media
 PRODUCT_PACKAGES += \
-    android.hardware.media.c2@1.0-service
+#    android.hardware.media.c2@1.0-service
 
 PRODUCT_PACKAGES += \
     libavservices_minijail \
     libavservices_minijail.vendor \
     libavservices_minijail_vendor
 
-<<<<<<< Updated upstream
-=======
 PRODUCT_PACKAGES += \
     libOmxCore \
     libOmxVdec \
     libOmxVenc
->>>>>>> Stashed changes
 
 PRODUCT_PACKAGES += \
     libstagefrighthw \
@@ -460,12 +475,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_BOOT_JARS += \
     telephony-ext
 
-<<<<<<< Updated upstream
-=======
-# USB
-PRODUCT_PACKAGES +=
-
->>>>>>> Stashed changes
 # Vendor service manager
 PRODUCT_PACKAGES += \
     vndservicemanager
@@ -499,6 +508,30 @@ PRODUCT_PACKAGES += \
     libnl \
     libwfdaac_vendor \
     libpng.vendor
+
+# 32-bit Core Libraries (for compatibility and applications)
+PRODUCT_PACKAGES += \
+#    libavutil.vendor \
+#    libswresample.vendor \
+#    libavcodec.vendor \
+    libc++ \
+    libandroid_runtime \
+    libcrypto \
+    libssl \
+    libdl \
+    libnativehelper \
+    libstdc++
+
+# 32-bit System Libraries
+PRODUCT_PACKAGES += \
+    libhidlbase \
+    libhwbinder \
+    libcutils \
+    libutils \
+    libbinder \
+    liblog \
+    libziparchive \
+    libz
 
 # Compat shims for WiFi Display / graphics (from hardware/lineage/compat)
 PRODUCT_PACKAGES += \

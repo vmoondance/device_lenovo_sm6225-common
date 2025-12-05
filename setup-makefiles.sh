@@ -60,3 +60,19 @@ if [ -s "${MY_DIR}/../${DEVICE}/proprietary-files.txt" ]; then
 
     echo "TARGET_RECOVERY_DEVICE_DIRS += vendor/$VENDOR/$DEVICE/proprietary" >> "$BOARDMK"
 fi
+
+# Fix Android.bp syntax errors (missing arch keys)
+"${MY_DIR}/fix_bp_syntax.py"
+
+# Add namespace imports for common Android.bp
+python3 "${MY_DIR}/add_namespace_imports.py" "${MY_DIR}/../../../vendor/${VENDOR}/${DEVICE_COMMON}/Android.bp"
+
+# Fix compile_multilib for modules with 64-bit-only dependencies
+python3 "${MY_DIR}/fix_multilib.py" "${ANDROID_ROOT}/vendor/lenovo/sm6225-common/Android.bp"
+python3 "${MY_DIR}/fix_wfd_deps.py" "${ANDROID_ROOT}/vendor/lenovo/sm6225-common/Android.bp"
+
+# Replace libui_gui_shim with libgui_shim (official LineageOS compat shim)
+sed -i 's/libui_gui_shim/libgui_shim/g' "${ANDROID_ROOT}/vendor/lenovo/sm6225-common/Android.bp"
+
+# Fix ELF check issues for modules with missing dependencies
+python3 "${MY_DIR}/fix_elf_checks.py" "${ANDROID_ROOT}/vendor/lenovo/sm6225-common/Android.bp"
